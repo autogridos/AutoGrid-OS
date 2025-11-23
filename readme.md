@@ -290,19 +290,9 @@ AutoGrid OS consists of modular components:
 - Device identity is verified through cryptographic signatures
 - Network communication is encrypted end-to-end
 
-## Contributing
-
-We welcome contributions! Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for details.
-
 ## License
 
 MIT License - see [LICENSE](./LICENSE) file for details.
-
-## Support
-
-- Documentation: https://docs.autogrid.io
-- Discord: https://discord.gg/autogrid
-- Issues: https://github.com/autogrid/autogrid-os/issues
 
 ## Roadmap
 
