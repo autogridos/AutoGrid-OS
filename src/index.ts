@@ -15,6 +15,13 @@ export { ReputationRegistry } from './modules/ReputationRegistry';
 export { TaskMarketplace } from './modules/TaskMarketplace';
 export { FleetManager } from './modules/FleetManager';
 
+// Adapters
+export { WarehouseRobotAdapter } from './adapters/WarehouseRobotAdapter';
+export { ServiceRobotAdapter } from './adapters/ServiceRobotAdapter';
+
+// Utils
+export * from './utils/helpers';
+
 // Types
 export * from './types';
 

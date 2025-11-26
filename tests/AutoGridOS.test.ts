@@ -167,8 +167,15 @@ describe('AutoGridOS', () => {
     });
 
     it('should get current location', () => {
+      // Location is undefined until explicitly set
       const location = robot.getLocation();
-      expect(location).toBeDefined();
+      expect(location).toBeUndefined();
+      
+      // After setting location it should be defined
+      robot.updateLocation({ x: 5, y: 10, floor: 2 });
+      const updatedLocation = robot.getLocation();
+      expect(updatedLocation).toBeDefined();
+      expect(updatedLocation?.x).toBe(5);
     });
   });
 
