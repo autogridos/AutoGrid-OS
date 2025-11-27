@@ -1,11 +1,18 @@
-# AutoGrid OS
+# AutoGrid OS 2.0
 
 **Economic Operating System for Autonomous Devices and Robots**
 
 AutoGrid OS is an economic layer for robotics and autonomous systems, enabling devices to pay each other, distribute tasks, prove execution, maintain reputation, and self-organize into independent economic networks without centralized control.
 
+## 🆕 What's New in v2.0
+
+- **🐝 Swarm Intelligence** - Collective problem-solving with ant colony, particle swarm, and flocking algorithms
+- **🛡️ Insurance & Collateral** - Task insurance pools, risk assessment, and automated claims
+- **🔧 Predictive Maintenance** - Health monitoring, failure prediction, and automated repair scheduling
+
 ## Features
 
+### Core Features (v1.0)
 - 🤖 **Machine-to-Machine Payments** - Private transactions between devices
 - ✅ **Task Verification** - Zero-knowledge proofs for task completion
 - 🎯 **Autonomous Task Distribution** - Automatic optimal task assignment
@@ -13,6 +20,29 @@ AutoGrid OS is an economic layer for robotics and autonomous systems, enabling d
 - 💰 **Dynamic Pricing** - Market-driven task costs
 - 🔄 **Fleet Optimization** - Internal resource sharing and coordination
 - 🛡️ **Privacy-First** - All transactions and proofs are private by default
+
+### Advanced Features (v2.0)
+
+#### 🐝 Swarm Intelligence
+- **Collective Problem Solving** - Coordinate multiple robots for complex tasks
+- **Multiple Algorithms** - Ant Colony, Particle Swarm, Flocking, Bees, Consensus
+- **Formation Control** - Line, Circle, Wedge, Grid, Surround, Convoy formations
+- **Pheromone Trails** - Shared knowledge through virtual pheromones
+- **Distributed Search** - Efficient area coverage and exploration
+
+#### 🛡️ Insurance & Collateral
+- **Task Insurance** - Protect against task failures with automated policies
+- **Insurance Pools** - Fleet-level risk sharing and mutual insurance
+- **Risk Assessment** - Automated risk scoring and premium calculation
+- **Collateral Management** - Lock deposits for high-value tasks
+- **Automated Claims** - Instant claim processing with proof verification
+
+#### 🔧 Predictive Maintenance
+- **Health Monitoring** - Real-time component health tracking
+- **Failure Prediction** - ML-based failure probability estimation
+- **Automated Scheduling** - Smart maintenance scheduling
+- **Parts Inventory** - Spare parts tracking and auto-reorder
+- **Service Marketplace** - Connect with repair robots/services
 
 ## Installation
 
@@ -25,7 +55,6 @@ npm install @autogrid/os
 ```typescript
 import { AutoGridOS, DeviceType } from '@autogrid/os';
 
-// Initialize AutoGrid OS for your device
 const robot = new AutoGridOS({
   deviceId: 'warehouse-bot-001',
   deviceType: DeviceType.WAREHOUSE,
@@ -33,262 +62,146 @@ const robot = new AutoGridOS({
   capabilities: ['transport', 'sorting', 'picking']
 });
 
-// Connect to the network
 await robot.connect();
 
-// Listen for available tasks
 robot.onTaskAvailable((task) => {
-  console.log('New task:', task);
-  
-  // Submit a bid
   robot.submitBid(task.id, {
     price: 100,
-    estimatedDuration: 300 // seconds
+    estimatedDuration: 300
   });
 });
-
-// Handle task assignment
-robot.onTaskAssigned(async (task) => {
-  console.log('Task assigned:', task);
-  
-  // Execute the task
-  const result = await executeTask(task);
-  
-  // Submit proof of completion
-  await robot.submitProof(task.id, result);
-});
 ```
 
-## Core Modules
+## v2.0 Modules
 
-### Payment Module
-
-Handle private machine-to-machine transactions:
+### 🐝 Swarm Intelligence
 
 ```typescript
-import { PaymentModule } from '@autogrid/os';
+import { SwarmIntelligence, SwarmAlgorithm, FormationType } from '@autogrid/os';
 
-const payment = new PaymentModule({
+const swarm = new SwarmIntelligence({
   deviceId: 'robot-001',
-  privateKey: 'key'
+  defaultAlgorithm: SwarmAlgorithm.ANT_COLONY
 });
 
-// Send payment to another device
-await payment.send({
-  to: 'robot-002',
-  amount: 500,
-  memo: 'Task completion payment'
-});
-
-// Check balance
-const balance = await payment.getBalance();
-```
-
-### Task Verification Module
-
-Generate and verify zero-knowledge proofs:
-
-```typescript
-import { TaskVerificationModule } from '@autogrid/os';
-
-const verification = new TaskVerificationModule();
-
-// Generate proof of task completion
-const proof = await verification.generateProof({
-  taskId: 'task-123',
-  result: taskResult,
-  parameters: taskParams
-});
-
-// Verify proof
-const isValid = await verification.verifyProof(proof);
-```
-
-### Coordination Layer
-
-Manage task requests and routing:
-
-```typescript
-import { CoordinationLayer } from '@autogrid/os';
-
-const coordinator = new CoordinationLayer({
-  deviceId: 'robot-001'
-});
-
-// Publish a new task
-await coordinator.publishTask({
-  type: 'transport',
-  payload: { from: 'A1', to: 'B5' },
-  maxPrice: 1000,
-  deadline: Date.now() + 3600000
-});
-
-// Subscribe to task updates
-coordinator.onTaskUpdate((update) => {
-  console.log('Task status:', update);
-});
-```
-
-### Reputation Registry
-
-Track and query device reputation:
-
-```typescript
-import { ReputationRegistry } from '@autogrid/os';
-
-const reputation = new ReputationRegistry();
-
-// Get device reputation
-const score = await reputation.getScore('robot-001');
-
-// Update reputation after task completion
-await reputation.recordCompletion({
-  deviceId: 'robot-001',
-  taskId: 'task-123',
-  success: true,
-  rating: 5
-});
-```
-
-### Task Marketplace
-
-Decentralized task bidding and assignment:
-
-```typescript
-import { TaskMarketplace } from '@autogrid/os';
-
-const marketplace = new TaskMarketplace({
-  deviceId: 'robot-001'
-});
-
-// Browse available tasks
-const tasks = await marketplace.getAvailableTasks({
-  type: 'warehouse',
-  maxDistance: 100,
-  minReputation: 4.0
-});
-
-// Submit bid with automated optimization
-await marketplace.submitBid(taskId, {
-  price: 'auto', // Automatically calculate optimal price
-  priority: 'high'
-});
-```
-
-## Use Cases
-
-### Warehouse Automation
-
-```typescript
-const warehouseBot = new AutoGridOS({
-  deviceId: 'warehouse-bot-001',
-  deviceType: DeviceType.WAREHOUSE,
-  capabilities: ['transport', 'sorting', 'picking'],
-  location: { x: 10, y: 20, floor: 1 }
-});
-
-// Fleet automatically redistributes tasks based on:
-// - Distance to task location
-// - Current load
-// - Battery level
-// - Reputation score
-```
-
-### Hospital Robotics
-
-```typescript
-const medicalBot = new AutoGridOS({
-  deviceId: 'medical-bot-001',
-  deviceType: DeviceType.MEDICAL,
-  capabilities: ['sterilization', 'transport', 'assistance']
-});
-
-// Critical tasks get prioritized
-// Robots can pay each other for urgent task swapping
-```
-
-### Smart City Services
-
-```typescript
-const cleaningDrone = new AutoGridOS({
-  deviceId: 'drone-001',
-  deviceType: DeviceType.CLEANING,
-  capabilities: ['cleaning', 'monitoring']
-});
-
-// Autonomous territory division
-// 24/7 operation without dispatcher
-```
-
-## Advanced Configuration
-
-### Fleet Management
-
-```typescript
-import { FleetManager } from '@autogrid/os';
-
-const fleet = new FleetManager({
-  fleetId: 'warehouse-fleet-alpha',
-  devices: ['robot-001', 'robot-002', 'robot-003']
-});
-
-// Enable internal optimization
-fleet.enableInternalMarket({
-  allowTaskSwapping: true,
-  allowResourceSharing: true,
-  dynamicPricing: true
-});
-
-// Monitor fleet performance
-fleet.onMetrics((metrics) => {
-  console.log('Fleet efficiency:', metrics.efficiency);
-  console.log('Average task time:', metrics.avgTaskTime);
-});
-```
-
-### Custom Task Types
-
-```typescript
-import { TaskDefinition } from '@autogrid/os';
-
-const customTask: TaskDefinition = {
-  type: 'custom-assembly',
-  requiredCapabilities: ['precision-grip', 'vision-system'],
-  verificationRules: {
-    requireProof: true,
-    requireWitness: false,
-    minReputation: 4.5
-  },
-  pricing: {
-    basePrice: 1000,
-    variableFactors: ['complexity', 'urgency']
+// Form a swarm for coordinated task
+const cleanupSwarm = await swarm.formSwarm({
+  taskId: 'large-cleanup',
+  minDevices: 5,
+  algorithm: SwarmAlgorithm.ANT_COLONY,
+  objective: {
+    type: 'coverage',
+    successCriteria: { minCoverage: 95 }
   }
-};
+});
 
-robot.registerTaskType(customTask);
+// Execute coordinated action
+await cleanupSwarm.coordinatedAction('surround', targetLocation, {
+  formation: FormationType.SURROUND,
+  timing: 'synchronized'
+});
+
+// Share discoveries via pheromones
+cleanupSwarm.depositPheromone(deviceId, path, 'success', 1.0);
 ```
 
-## API Reference
+### 🛡️ Insurance & Collateral
 
-See [API Documentation](./docs/API.md) for complete reference.
+```typescript
+import { InsuranceModule, InsuranceType } from '@autogrid/os';
+
+const insurance = new InsuranceModule({ deviceId: 'robot-001' });
+
+// Get quote and purchase policy
+const quote = await insurance.getQuote({
+  taskId: 'high-value-task',
+  type: InsuranceType.COMPREHENSIVE,
+  coverage: 10000
+});
+
+const policy = await insurance.insureTask('high-value-task', {
+  coverage: 10000,
+  quoteId: quote.id
+});
+
+// Lock collateral for task
+const collateral = await insurance.lockCollateral({
+  taskId: 'high-value-task',
+  amount: 500,
+  beneficiaryId: 'task-publisher'
+});
+
+// Join insurance pool
+await insurance.joinPool('fleet-insurance-pool', 1000);
+```
+
+### 🔧 Predictive Maintenance
+
+```typescript
+import { MaintenancePrediction, ComponentType } from '@autogrid/os';
+
+const maintenance = new MaintenancePrediction({
+  deviceId: 'robot-001',
+  alertThreshold: 0.7,
+  autoSchedule: true
+});
+
+// Register and monitor components
+const motor = maintenance.registerComponent({
+  type: ComponentType.MOTOR,
+  name: 'Drive Motor',
+  expectedLifespan: 10000,
+  maintenanceInterval: 500
+});
+
+maintenance.updateComponentMetrics(motor.id, {
+  temperature: 65,
+  vibration: 3.5,
+  efficiency: 92
+});
+
+// Enable monitoring
+maintenance.enableHealthMonitoring({
+  reportInterval: 3600000,
+  alertThreshold: 0.7
+});
+
+// Listen for predictions
+maintenance.on('maintenance:predicted', (data) => {
+  console.log(`Predicted: ${data.prediction.componentName}`);
+  console.log(`Action: ${data.prediction.preventiveAction}`);
+});
+```
 
 ## Architecture
 
-AutoGrid OS consists of modular components:
+```
+┌─────────────────────────────────────────────────────────────┐
+│                     AutoGrid OS 2.0                         │
+├─────────────────────────────────────────────────────────────┤
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐  │
+│  │   Swarm     │  │  Insurance  │  │    Maintenance      │  │
+│  │Intelligence │  │ & Collateral│  │    Prediction       │  │
+│  └─────────────┘  └─────────────┘  └─────────────────────┘  │
+├─────────────────────────────────────────────────────────────┤
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐  │
+│  │   Payment   │  │    Task     │  │    Reputation       │  │
+│  │   Module    │  │ Marketplace │  │    Registry         │  │
+│  └─────────────┘  └─────────────┘  └─────────────────────┘  │
+├─────────────────────────────────────────────────────────────┤
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐  │
+│  │Coordination │  │Verification │  │   Fleet Manager     │  │
+│  │   Layer     │  │   Module    │  │                     │  │
+│  └─────────────┘  └─────────────┘  └─────────────────────┘  │
+└─────────────────────────────────────────────────────────────┘
+```
 
-1. **Payment Layer** - Private transaction handling
-2. **Verification Layer** - Zero-knowledge proof generation and validation
-3. **Coordination Layer** - Task routing and state management
-4. **Reputation Layer** - Performance tracking and scoring
-5. **Market Layer** - Task bidding and automatic assignment
-6. **DevKit** - Integration tools and adapters
+## Examples
 
-## Security
-
-- All payments are private by default
-- Task proofs use zero-knowledge cryptography
-- Device identity is verified through cryptographic signatures
-- Network communication is encrypted end-to-end
+- [Basic Usage](./examples/basic-usage.ts)
+- [Service Robot](./examples/service-robot.ts)
+- [Warehouse Fleet](./examples/warehouse-fleet.ts)
+- [Advanced Features v2.0](./examples/advanced-features.ts) *(NEW)*
 
 ## License
 
@@ -298,5 +211,6 @@ MIT License - see [LICENSE](./LICENSE) file for details.
 
 - [x] Phase 1: Core OS Layer (payments, routing, verification)
 - [x] Phase 2: Device Integrations (warehouse, medical, service robots)
-- [ ] Phase 3: Fleet Economy (auctions, reputation, dynamic pricing)
+- [x] Phase 3: Advanced Intelligence (swarm, insurance, maintenance)
 - [ ] Phase 4: Full Autonomy (cross-fleet coordination, robot DAOs)
+- [ ] Phase 5: Global Network (inter-city coordination, global insurance pools)
