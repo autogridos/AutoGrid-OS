@@ -61,6 +61,21 @@ export {
   type SparePart
 } from './modules/MaintenancePrediction';
 
+// v2.1 Modules - Energy Market
+export {
+  EnergyMarketModule,
+  EnergySourceType,
+  EnergyOrderStatus,
+  ChargingStationStatus,
+  type EnergySource,
+  type EnergyOrder,
+  type ChargingSession,
+  type EnergyReservation,
+  type EnergyMarketStats,
+  type PeerEnergyTransfer,
+  type EnergyForecast
+} from './modules/EnergyMarketModule';
+
 // Adapters
 export { WarehouseRobotAdapter } from './adapters/WarehouseRobotAdapter';
 export { ServiceRobotAdapter } from './adapters/ServiceRobotAdapter';
@@ -72,4 +87,4 @@ export * from './utils/helpers';
 export * from './types';
 
 // Version
-export const VERSION = '2.0.0';
+export const VERSION = '2.1.0';

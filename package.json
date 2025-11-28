@@ -1,6 +1,6 @@
 {
   "name": "@autogrid/os",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Economic operating system for autonomous devices and robots - enabling machine-to-machine payments, task distribution, and self-organizing robot fleets",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -22,7 +22,10 @@
     "robot-fleet",
     "privacy-payments",
     "zero-knowledge",
-    "autonomous-devices"
+    "autonomous-devices",
+    "energy-market",
+    "smart-charging",
+    "p2p-energy"
   ],
   "author": "AutoGrid Labs",
   "license": "MIT",

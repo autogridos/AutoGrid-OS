@@ -7,6 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.0] - 2024-11-29
+
+### Added
+
+#### ⚡ Energy Market Module
+- **EnergyMarketModule** class for decentralized energy trading between robots
+- **Energy Sources**: Register and manage charging stations, solar panels, battery swap stations
+- **Order System**: Create buy/sell orders for energy with price limits and urgency levels
+- **Smart Matching**: Automatic matching of energy buyers with optimal sources
+- **Charging Sessions**: Full lifecycle management of charging sessions with real-time updates
+- **Reservations**: Book charging slots in advance with deposits
+- **Peer-to-Peer Transfer**: Direct energy transfer between devices
+- **Energy Forecasting**: Predict consumption and find optimal charging times
+- **Smart Charging**: AI-powered recommendations for when and where to charge
+- **Dynamic Pricing**: Track price history and adjust based on demand
+- **Market Statistics**: Comprehensive analytics for energy trading
+
+### Changed
+- Updated `index.ts` to export all v2.1 modules and types
+- Bumped version to 2.1.0
+- Added energy-related keywords to package.json
+
 ## [2.0.0] - 2024-11-27
 
 ### Added
